@@ -23,8 +23,8 @@ app.use('/files', express.static(path.resolve(__dirname, '..','uploads')));
 app.use(routes);
 
 
-const port = 8091;
-
+//const port = 8091;
+const port = process.env.PORT
 app.listen(port, () => console.log('Server running...'));
 
 
