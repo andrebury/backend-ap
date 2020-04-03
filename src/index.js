@@ -11,7 +11,7 @@ const app = express();
 const routes = require('./routes');
 //'mongodb://mongo:27017/docker-node-mongo'
 mongoose.connect(
-  'mongodb+srv://aphitss:Embratel@21@cluster0-2whxw.gcp.mongodb.net/test?retryWrites=true&w=majority',
+  process.env.DB_ACCESS,
     { useNewUrlParser: true }
   )
   .then(() => console.log('MongoDB Connected'))
