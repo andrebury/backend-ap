@@ -26,6 +26,6 @@ app.use(routes);
 
 //const port = 8091;
 
-app.listen(process.env.PORT || '3333', () => console.log('Server running on port ' + port  + '...'));
+app.listen(process.env.PORT || '3333');
 
 
