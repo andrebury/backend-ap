@@ -1,7 +1,7 @@
 const express = require('express');
 const cors = require('cors');
 const path  = require('path')
-
+require('dotenv/config');
 const mongoose = require('mongoose');
 
 
@@ -9,10 +9,11 @@ const app = express();
 
 
 const routes = require('./routes');
-//'mongodb://mongo:27017/docker-node-mongo'
 mongoose.connect(
+  //process.env.DB_ACCESS,
   process.env.DB_ACCESS,
-    { useNewUrlParser: true }
+  //'mongodb+srv://aphomol:Embratel@21@cluster0-3yv4i.mongodb.net/test?retryWrites=true&w=majority',  
+  { useNewUrlParser: true,  useUnifiedTopology: true }
   )
   .then(() => console.log('MongoDB Connected'))
   .catch(err => console.log('Erro: ' + err));
@@ -25,6 +26,6 @@ app.use(routes);
 
 //const port = 8091;
 const port = process.env.PORT
-app.listen(port, () => console.log('Server running...'));
+app.listen(port, () => console.log('Server running on port ' + port  + '...'));
 
 

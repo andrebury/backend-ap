@@ -13,19 +13,9 @@ const ClienteSchema = new Schema({
   },
     solicitantes: {
     type: [String],
-  },
-    foto: {
-    type: String,
   }
-}, {
-    toJSON: {
-        virtuals: true,
-    }
 });
 
-ClienteSchema.virtual('thumbnail_url').get(function(){
-    return `http://localhost/files/${this.foto}`
-})
 
 module.exports = mongoose.model('Cliente', ClienteSchema);
 

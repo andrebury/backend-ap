@@ -32,7 +32,8 @@ routes.post('/usuario',UsuarioController.index)
 routes.get('/usuario/:projeto_id',UsuarioController.indexbyid)
 
 
-routes.post('/cadastro/cliente',upload.single('foto'), ClienteController.store)
+routes.post('/cadastro/cliente',  ClienteController.store)
+routes.post('/update/cliente',ClienteController.update)
 routes.get('/cliente/:id',ClienteController.indexbyid)
 routes.get('/clientes',ClienteController.index)
 
