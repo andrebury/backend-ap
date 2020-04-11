@@ -53,7 +53,7 @@ module.exports = {
       .populate("pm", "nome")
       .exec();
 
-    return res.status(200).json(projetos);
+    return res.status(200).json({ projetos, user: req.usuarioID });
   },
 
   async indextotal(req, res) {
@@ -105,7 +105,7 @@ module.exports = {
       .populate("pm", "nome")
       .exec();
 
-    return res.status(200).json(projetos);
+    return res.status(200).json(projetos, { user: req.usuarioID });
   },
 
   async indexbyid(req, res) {
@@ -126,7 +126,7 @@ module.exports = {
           .exec();
       }
 
-      return res.status(200).json(projetos);
+      return res.status(200).json(projetos, { user: req.usuarioID });
     } catch (e) {
       return res.status(400).send("Nao encontrado");
     }
@@ -168,7 +168,7 @@ module.exports = {
       observacoes: observacoes,
     });
 
-    return res.status(200).json(projetos);
+    return res.status(200).json(projetos, { user: req.usuarioID });
   },
 
   async update(req, res) {
@@ -212,6 +212,6 @@ module.exports = {
       .populate("pm", "nome")
       .exec();
 
-    return res.status(200).json(projetos);
+    return res.status(200).json(projetos, { user: req.usuarioID });
   },
 };

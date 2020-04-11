@@ -53,7 +53,7 @@ module.exports = {
         .populate("solicitante", "nome")
         .exec();
 
-      return res.status(200).json(tarefas);
+      return res.status(200).json({ tarefas, user: req.usuarioID });
     } catch (e) {
       console.log(e);
       return res.status(400).json({ mesagem: "Não encontrado" });
@@ -111,7 +111,7 @@ module.exports = {
         .populate("solicitante", "nome")
         .exec();
 
-      return res.status(200).json(tarefas);
+      return res.status(200).json({ tarefas, user: req.usuarioID });
     } catch (e) {
       console.log(e);
       return res.status(400).json({ mesagem: "Não encontrado" });
@@ -127,8 +127,9 @@ module.exports = {
         .populate("desenvolvedor", "nome")
         .populate("solicitante", "nome")
         .exec();
+      console.log(id);
 
-      return res.status(200).json(tarefas);
+      return res.status(200).json({ tarefas, user: req.usuarioID });
     } catch (e) {
       return res.status(400).send("Nao encontrado");
     }
@@ -168,7 +169,7 @@ module.exports = {
       observacoes: observacoes,
     });
 
-    return res.status(200).json(tarefas);
+    return res.status(200).json({ tarefas, user: req.usuarioID });
   },
 
   async update(req, res) {
@@ -206,6 +207,6 @@ module.exports = {
       }
     );
 
-    return res.status(200).json(tarefas);
+    return res.status(200).json({ tarefas, user: req.usuarioID });
   },
 };
