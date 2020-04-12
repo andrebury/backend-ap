@@ -1,13 +1,15 @@
 const express = require("express");
-const multer = require("multer");
+//const multer = require("multer");
 const authMiddleware = require("./midllewares/auth");
 
-const uploadConfig = require("./config/upload");
+//const uploadConfig = require("./config/upload");
 
 const routes = express.Router();
+const routeAuth = express.Router();
+
 routes.use(authMiddleware);
 
-const upload = multer(uploadConfig);
+//const upload = multer(uploadConfig);
 
 const ProjetoController = require("./controllers/ProjetoController");
 const UsuarioController = require("./controllers/UsuarioController");
@@ -28,10 +30,10 @@ routes.post("/tarefas", TarefaController.index);
 routes.get("/tarefa/:id", TarefaController.indexbyid);
 routes.get("/tarefa/total/", ProjetoController.indextotal);
 
-routes.post("/cadastro/usuario", UsuarioController.store);
+routeAuth.post("/cadastro/usuario", UsuarioController.store);
 routes.post("/usuario", UsuarioController.index);
 routes.get("/usuario/:id", UsuarioController.indexbyid);
-routes.post("/authenticate", UsuarioController.authUser);
+routeAuth.post("/authenticate", UsuarioController.authUser);
 
 routes.post("/cadastro/cliente", ClienteController.store);
 routes.post("/update/cliente", ClienteController.update);
