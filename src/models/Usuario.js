@@ -1,50 +1,63 @@
-const mongoose = require('mongoose');
+const mongoose = require("mongoose");
+const bcrypt = require("bcryptjs");
 const Schema = mongoose.Schema;
 
-const UsuarioSchema = new Schema({
-  usuario_id: {
-    type: Number,
-    required: true
-  },
-  nome: {
-    type: String,
-    required: true
-  },
-  funcao: {
-    type: String,
-    required: true
-  },
+const UsuarioSchema = new Schema(
+  {
+    usuario_id: {
+      type: Number,
+      required: true,
+    },
+    nome: {
+      type: String,
+      required: true,
+    },
+    funcao: {
+      type: String,
+      required: true,
+    },
     email: {
-    type: String,
-    required: true
-  },
+      type: String,
+      required: true,
+      unique: true,
+      lowercase: true,
+    },
     senha: {
-    type: String,
-    required: true
-  },
+      type: String,
+      required: true,
+      select: false,
+    },
     habilidades: {
-    type: [String],
-    required: false
-  },
+      type: [String],
+      required: false,
+    },
     foto: {
-    type: String,
-    required: false
+      type: String,
+      required: false,
+    },
+    date: {
+      type: String,
+      required: false,
+    },
   },
-  date: {
-    type: String,
-    required: false
-  }
-}, {
+  {
     toJSON: {
-        virtuals: true,
-    }
+      virtuals: true,
+    },
+  }
+);
+
+UsuarioSchema.pre("save", async function (next) {
+  const hash = await bcrypt.hash(this.senha, 10);
+  this.senha = hash;
+  next();
 });
 
-UsuarioSchema.virtual('thumbnail_url').get(function(){
-    return `http://localhost/files/${this.foto}`
-})
+UsuarioSchema.virtual("thumbnail_url").get(function () {
+  return `http://localhost/files/${this.foto}`;
+});
 
-module.exports = mongoose.model('Usuario', UsuarioSchema);
+module.exports = mongoose.model("Usuario", UsuarioSchema);
 
 // CREATE TABLE usuarios
 // (
