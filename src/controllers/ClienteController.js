@@ -40,7 +40,7 @@ router.post("/update", async (req, res) => {
   return res.status(200).json({ cliente, user: req.usuarioID });
 });
 
-router.get("/:id", async (req, res) => {
+router.get("/id/:id", async (req, res) => {
   const { id } = req.params;
 
   try {

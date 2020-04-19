@@ -7,86 +7,24 @@ const router = express.Router();
 router.use(authMiddleware);
 
 router.post("/cadastro", async (req, res) => {
-  const {
-    cliente,
-    titulo,
-    descricao,
-    solicitante_cliente,
-    pm,
-    funcional,
-    prazo,
-    inicio,
-    fim,
-    status_projeto,
-    horas,
-    prioridade,
-    observacoes,
-  } = req.body;
+  const id_total = (await Projeto.find().countDocuments()) + 1;
 
-  const id_total = await Projeto.find().count();
+  req.body.projeto_id = id_total + 1;
+  delete req.body._id;
 
-  const projetos = await Projeto.create({
-    projeto_id: id_total + 1,
-    cliente: cliente,
-    titulo: titulo,
-    descricao: descricao,
-    solicitante_cliente: solicitante_cliente,
-    pm: pm,
-    funcional: funcional,
-    prazo: prazo,
-    inicio: inicio,
-    fim: fim,
-    status_projeto: status_projeto,
-    horas: horas,
-    prioridade: prioridade,
-    observacoes: observacoes,
-  });
+  const projetos = await Projeto.create(req.body);
 
-  return res.status(200).json(projetos, { user: req.usuarioID });
+  return res.send({ projetos, user: req.usuarioID });
 });
 
 router.post("/update", async (req, res) => {
-  const {
-    _id,
-    cliente,
-    titulo,
-    descricao,
-    solicitante_cliente,
-    pm,
-    funcional,
-    prazo,
-    inicio,
-    fim,
-    status_projeto,
-    horas,
-    prioridade,
-    observacoes,
-  } = req.body;
-
-  const projetos = await Projeto.updateOne(
-    { _id: _id },
-    {
-      cliente: cliente,
-      titulo: titulo,
-      descricao: descricao,
-      solicitante_cliente: solicitante_cliente,
-      pm: pm,
-      funcional: funcional,
-      prazo: prazo,
-      inicio: inicio,
-      fim: fim,
-      status_projeto: status_projeto,
-      horas: horas,
-      prioridade: prioridade,
-      observacoes: observacoes,
-    }
-  )
+  const projetos = await Projeto.updateOne({ _id: req.body._id }, req.body)
     .populate("cliente")
     .populate("funcional", "nome")
     .populate("pm", "nome")
     .exec();
 
-  return res.status(200).json(projetos, { user: req.usuarioID });
+  return res.status(200).json({ projetos, user: req.usuarioID });
 });
 
 router.get("/info", async (req, res) => {
@@ -144,7 +82,7 @@ router.get("/info", async (req, res) => {
   return res.status(200).json({ projetos, user: req.usuarioID });
 });
 
-router.get("/:id", async (req, res) => {
+router.get("/id/:id", async (req, res) => {
   const { id } = req.params;
   let projetos;
   try {
@@ -162,7 +100,7 @@ router.get("/:id", async (req, res) => {
         .exec();
     }
 
-    return res.status(200).json(projetos, { user: req.usuarioID });
+    return res.status(200).json({ projetos, user: req.usuarioID });
   } catch (e) {
     return res.status(400).send("Nao encontrado");
   }
@@ -217,7 +155,7 @@ router.get("/total", async (req, res) => {
     .populate("pm", "nome")
     .exec();
 
-  return res.status(200).json(projetos, { user: req.usuarioID });
+  return res.status(200).json({ projetos, user: req.usuarioID });
 });
 
 module.exports = (app) => app.use("/projeto", router);

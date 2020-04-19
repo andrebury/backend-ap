@@ -2,6 +2,8 @@ const Tarefa = require("../models/Tarefa");
 const express = require("express");
 const authMiddleware = require("../midllewares/auth");
 const ObjectId = require("mongoose").Types.ObjectId;
+const Projeto = require("../models/Projeto");
+const Usuario = require("../models/Usuario");
 
 const router = express.Router();
 router.use(authMiddleware);
@@ -136,7 +138,7 @@ router.post("/info", async (req, res) => {
   }
 });
 
-router.get("/:id", async (req, res) => {
+router.get("/id/:id", async (req, res) => {
   const { id } = req.params;
 
   try {

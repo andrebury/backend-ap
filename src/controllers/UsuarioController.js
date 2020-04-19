@@ -32,7 +32,7 @@ router.post("/info", async (req, res) => {
   });
 });
 
-router.get("/:id", async (req, res) => {
+router.get("/id/:id", async (req, res) => {
   const { id } = req.params;
 
   try {
