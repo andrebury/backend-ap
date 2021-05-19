@@ -44,14 +44,7 @@ router.get("/info", async (req, res) => {
     funcional: funcional,
     prioridade: prioridade,
     projeto_id: projeto_id,
-    status_projeto: [
-      "Aprovado",
-      "Desenho",
-      "Desenvolvimento",
-      "Testes",
-      "Homologação",
-      "Pós Implantação",
-    ],
+    status_projeto: status_projeto,
   };
 
   if (req.query.titulo == undefined) {

@@ -98,7 +98,7 @@ router.post("/info", async (req, res) => {
     titulo: titulo,
     solicitante: new ObjectId(solicitante),
     desenvolvedor: new ObjectId(desenvolvedor),
-    status: ["Desenho", "Aguardando GMUD", "Desenvolvimento", "Homologando"],
+    status: status,
     prioridade: prioridade,
     projeto: new ObjectId(projeto),
     funcional: funcional,
