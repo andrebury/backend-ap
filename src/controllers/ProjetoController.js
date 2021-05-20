@@ -6,13 +6,23 @@ const router = express.Router();
 
 router.use(authMiddleware);
 
+function normalizeBody(body){
+
+  if (body.pm == "") {
+    body.pm = null;
+  }
+  if (body.funcional == "") {
+    body.funcional = null;
+  } 
+  return body
+}
+
 router.post("/cadastro", async (req, res) => {
   const id_total = (await Projeto.find().countDocuments()) + 1;
 
   req.body.projeto_id = id_total + 1;
   delete req.body._id;
-  console.log(req.body);
-  const projetos = await Projeto.create(req.body);
+  const projetos = await Projeto.create(normalizeBody(req.body));
 
   return res.send({ projetos, user: req.usuarioID });
 });

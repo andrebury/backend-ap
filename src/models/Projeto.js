@@ -11,6 +11,7 @@ const ProjetoSchema = new Schema({
   cliente: {
     type:mongoose.Schema.Types.ObjectId,
     ref: 'Cliente',
+    default: null 
   },
   titulo: {
     type: String,
@@ -21,10 +22,12 @@ const ProjetoSchema = new Schema({
     pm: {
       type:mongoose.Schema.Types.ObjectId,
       ref: 'Usuario',
+      default: null 
     },
     funcional: {
       type:mongoose.Schema.Types.ObjectId,
       ref: 'Usuario',
+      default: null 
     },
     prazo: {
     type: String,
