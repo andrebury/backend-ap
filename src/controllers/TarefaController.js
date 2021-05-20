@@ -122,6 +122,9 @@ router.post("/info", async (req, res) => {
   if (req.body.funcional == undefined) {
     delete busca.funcional;
   }
+  if (req.body.status == undefined) {
+    delete busca.status;
+  }
   console.log(busca);
 
   try {
