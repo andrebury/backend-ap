@@ -76,7 +76,10 @@ router.get("/info", async (req, res) => {
   if (req.query.projeto_id == undefined) {
     delete busca.projeto_id;
   }
-
+  if (req.query.status_projeto == undefined) {
+    delete busca.status_projeto;
+  }
+  
   const projetos = await Projeto.find(busca)
     .populate("cliente")
     .populate("funcional", "nome")
