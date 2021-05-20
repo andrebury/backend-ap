@@ -45,6 +45,7 @@ router.get("/info", async (req, res) => {
     funcional,
     prioridade,
     projeto_id,
+    status_projeto
   } = req.query;
 
   const busca = {
@@ -54,7 +55,7 @@ router.get("/info", async (req, res) => {
     funcional: funcional,
     prioridade: prioridade,
     projeto_id: projeto_id,
-    status_projeto: status_projeto,
+    status_projeto: status_projeto == "" ? null : status_projeto, 
   };
 
   if (req.query.titulo == undefined) {
