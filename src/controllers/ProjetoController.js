@@ -11,7 +11,7 @@ router.post("/cadastro", async (req, res) => {
 
   req.body.projeto_id = id_total + 1;
   delete req.body._id;
-
+  console.log(req.body);
   const projetos = await Projeto.create(req.body);
 
   return res.send({ projetos, user: req.usuarioID });
