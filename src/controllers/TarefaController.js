@@ -19,6 +19,9 @@ function normalizeBody(body){
   if (body.solicitante == "") {
     body.solicitante = null;
   } 
+  if (body._id == "") {
+    body._id = null;
+  } 
   return body
 }
 
