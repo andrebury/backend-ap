@@ -28,7 +28,7 @@ router.post("/cadastro", async (req, res) => {
 });
 
 router.post("/update", async (req, res) => {
-  const projetos = await Projeto.updateOne({ _id: req.body._id }, req.body)
+  const projetos = await Projeto.updateOne({ _id: req.body._id }, normalizeBody(req.body))
     .populate("cliente")
     .populate("funcional", "nome")
     .populate("pm", "nome")

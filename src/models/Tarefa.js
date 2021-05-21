@@ -16,10 +16,12 @@ const TarefaSchema = new Schema({
   solicitante: {
     type: mongoose.Schema.Types.ObjectId,
     ref: "Usuario",
+    default: null 
   },
   desenvolvedor: {
     type: mongoose.Schema.Types.ObjectId,
     ref: "Usuario",
+
   },
   inicio: {
     type: String,

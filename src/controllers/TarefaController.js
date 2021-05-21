@@ -8,39 +8,56 @@ const Usuario = require("../models/Usuario");
 const router = express.Router();
 router.use(authMiddleware);
 
-router.post("/cadastro", async (req, res) => {
-  const {
-    titulo,
-    projeto,
-    solicitante,
-    desenvolvedor,
-    inicio,
-    fim,
-    status,
-    prazo,
-    horas,
-    descricao,
-    prioridade,
-    observacoes,
-  } = req.body;
-  const id_total = await Tarefa.find().count();
-  console.log("obs " + observacoes);
+function normalizeBody(body){
 
-  const tarefas = await Tarefa.create({
-    tarefa_id: id_total + 1,
-    titulo: titulo,
-    projeto: projeto,
-    solicitante: solicitante,
-    desenvolvedor: desenvolvedor,
-    inicio: inicio,
-    fim: fim,
-    status: status,
-    prazo: prazo,
-    horas: horas,
-    descricao: descricao,
-    prioridade: prioridade,
-    observacoes: observacoes,
-  });
+  if (body.pm == "") {
+    body.pm = null;
+  }
+  if (body.funcional == "") {
+    body.funcional = null;
+  } 
+  if (body.solicitante == "") {
+    body.solicitante = null;
+  } 
+  return body
+}
+
+router.post("/cadastro", async (req, res) => {
+  // const {
+  //   titulo,
+  //   projeto,
+  //   solicitante,
+  //   desenvolvedor,
+  //   inicio,
+  //   fim,
+  //   status,
+  //   prazo,
+  //   horas,
+  //   descricao,
+  //   prioridade,
+  //   observacoes,
+  // } = req.body;
+
+  const id_total = await Tarefa.find().count();
+  //console.log("obs " + observacoes);
+
+  req.body.tarefa_id = id_total + 1;
+  const tarefas = await Tarefa.create(normalizeBody(req.body))
+  // const tarefas = await Tarefa.create({
+  //   tarefa_id: id_total + 1,
+  //   titulo: titulo,
+  //   projeto: projeto,
+  //   solicitante: solicitante,
+  //   desenvolvedor: desenvolvedor,
+  //   inicio: inicio,
+  //   fim: fim,
+  //   status: status,
+  //   prazo: prazo,
+  //   horas: horas,
+  //   descricao: descricao,
+  //   prioridade: prioridade,
+  //   observacoes: observacoes,
+  // });
 
   return res.status(200).json({ tarefas, user: req.usuarioID });
 });
@@ -67,7 +84,7 @@ router.post("/update", async (req, res) => {
     {
       titulo: titulo,
       projeto: projeto,
-      solicitante: solicitante,
+      solicitante: body.solicitante == "" ? null : solicitante,
       desenvolvedor: desenvolvedor,
       inicio: inicio,
       fim: fim,
