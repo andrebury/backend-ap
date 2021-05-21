@@ -84,7 +84,7 @@ router.post("/update", async (req, res) => {
     {
       titulo: titulo,
       projeto: projeto,
-      solicitante: body.solicitante == "" ? null : solicitante,
+      solicitante: solicitante == "" ? null : solicitante,
       desenvolvedor: desenvolvedor,
       inicio: inicio,
       fim: fim,
